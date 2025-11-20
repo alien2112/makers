@@ -1,0 +1,726 @@
+{
+    "designSystem": {
+      "metadata": {
+        "brandName": "MAKERS",
+        "tagline": "We Make The Future",
+        "primaryDomain": "E-commerce Electronics & Robotics",
+        "designLanguage": "Modern, minimalist with accent gradients"
+      },
+      "colorPalette": {
+        "primary": {
+          "blue": "#0056CC",
+          "darkBlue": "#003A99",
+          "lightBlue": "#007AFF"
+        },
+        "accent": {
+          "red": "#E63946",
+          "teal": "#4ECDC4",
+          "orange": "#FF9500"
+        },
+        "neutral": {
+          "white": "#FFFFFF",
+          "lightGray": "#F5F5F5",
+          "mediumGray": "#E8E8E8",
+          "darkGray": "#666666",
+          "textDark": "#333333",
+          "textLight": "#999999"
+        },
+        "backgrounds": {
+          "pageBg": "#FAFAFA",
+          "cardBgLight": "#F0F8FB"
+        }
+      },
+      "elementStyling": {
+        "header": {
+          "container": {
+            "background": "#FFFFFF",
+            "borderBottom": "1px solid #E8E8E8",
+            "height": "64px",
+            "padding": "0 24px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between"
+          },
+          "logo": {
+            "width": "120px",
+            "height": "auto",
+            "display": "flex",
+            "alignItems": "center"
+          },
+          "navigation": {
+            "menuItems": {
+              "background": "transparent",
+              "color": "#333333",
+              "fontSize": "14px",
+              "fontWeight": "500",
+              "padding": "8px 16px",
+              "textDecoration": "none",
+              "cursor": "pointer",
+              "transition": "all 0.3s ease",
+              "states": {
+                "active": {
+                  "background": "#0056CC",
+                  "color": "#FFFFFF",
+                  "borderRadius": "4px"
+                },
+                "hover": {
+                  "color": "#0056CC",
+                  "background": "#F5F5F5",
+                  "borderRadius": "4px"
+                }
+              }
+            }
+          },
+          "searchBar": {
+            "background": "#F5F5F5",
+            "border": "1px solid #E8E8E8",
+            "borderRadius": "24px",
+            "padding": "8px 16px",
+            "width": "300px",
+            "color": "#999999",
+            "fontSize": "13px",
+            "icon": {
+              "color": "#999999"
+            }
+          },
+          "icons": {
+            "container": {
+              "display": "flex",
+              "gap": "16px",
+              "alignItems": "center"
+            },
+            "cartIcon": {
+              "position": "relative",
+              "color": "#333333",
+              "fontSize": "18px",
+              "cursor": "pointer"
+            },
+            "badge": {
+              "background": "#E63946",
+              "color": "#FFFFFF",
+              "borderRadius": "50%",
+              "width": "18px",
+              "height": "18px",
+              "display": "flex",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "fontSize": "10px",
+              "fontWeight": "bold",
+              "position": "absolute",
+              "top": "-6px",
+              "right": "-6px"
+            },
+            "userIcon": {
+              "color": "#333333",
+              "fontSize": "18px",
+              "cursor": "pointer",
+              "states": {
+                "hover": {
+                  "color": "#0056CC"
+                }
+              }
+            },
+            "favoriteIcon": {
+              "color": "#333333",
+              "fontSize": "18px",
+              "cursor": "pointer",
+              "states": {
+                "hover": {
+                  "color": "#E63946"
+                }
+              }
+            }
+          },
+          "phoneNumber": {
+            "color": "#333333",
+            "fontSize": "13px",
+            "fontWeight": "600",
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "8px",
+            "icon": {
+              "color": "#0056CC",
+              "fontSize": "16px"
+            }
+          }
+        },
+        "hero": {
+          "carousel": {
+            "height": "360px",
+            "background": "#FAFAFA",
+            "borderRadius": "12px",
+            "overflow": "hidden",
+            "position": "relative",
+            "margin": "24px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.08)"
+          },
+          "slide1": {
+            "background": "linear-gradient(135deg, #E3F2FD 0%, #B3E5FC 100%)",
+            "minHeight": "360px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "position": "relative",
+            "overflow": "hidden"
+          },
+          "deliveryIllustration": {
+            "fill": "#FF6B6B",
+            "opacity": "0.9",
+            "filter": "drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+          },
+          "locationPins": {
+            "fill": "#0056CC",
+            "opacity": "0.8"
+          },
+          "headline": {
+            "text": "Your Electronics, Delivered Swiftly Across Egypt",
+            "fontSize": "28px",
+            "fontWeight": "700",
+            "color": "#333333",
+            "lineHeight": "1.3",
+            "textAlign": "center",
+            "marginTop": "24px"
+          },
+          "navigationDots": {
+            "container": {
+              "display": "flex",
+              "justifyContent": "center",
+              "gap": "8px",
+              "marginTop": "16px",
+              "paddingBottom": "16px"
+            },
+            "dot": {
+              "width": "8px",
+              "height": "8px",
+              "borderRadius": "50%",
+              "background": "#D0D0D0",
+              "cursor": "pointer",
+              "transition": "all 0.3s ease",
+              "states": {
+                "active": {
+                  "background": "#0056CC",
+                  "width": "24px",
+                  "borderRadius": "4px"
+                },
+                "hover": {
+                  "background": "#999999"
+                }
+              }
+            }
+          },
+          "arrowButtons": {
+            "background": "#FFFFFF",
+            "border": "none",
+            "borderRadius": "50%",
+            "width": "40px",
+            "height": "40px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "cursor": "pointer",
+            "position": "absolute",
+            "top": "50%",
+            "transform": "translateY(-50%)",
+            "icon": {
+              "color": "#333333",
+              "fontSize": "20px"
+            },
+            "boxShadow": "0 2px 6px rgba(0,0,0,0.1)",
+            "states": {
+              "hover": {
+                "background": "#0056CC",
+                "iconColor": "#FFFFFF",
+                "boxShadow": "0 4px 12px rgba(0,86,204,0.3)"
+              }
+            },
+            "left": {
+              "left": "12px"
+            },
+            "right": {
+              "right": "12px"
+            }
+          }
+        },
+        "promotionalCards": {
+          "grid": {
+            "display": "grid",
+            "gridTemplateColumns": "1fr 1fr",
+            "gap": "16px",
+            "margin": "24px",
+            "maxWidth": "100%"
+          },
+          "edgeAICard": {
+            "background": "linear-gradient(135deg, #E3F2FD 0%, #B3E5FC 100%)",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "space-between",
+            "minHeight": "280px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.08)",
+            "position": "relative",
+            "overflow": "hidden",
+            "border": "1px solid rgba(179, 229, 252, 0.5)"
+          },
+          "productImage": {
+            "width": "140px",
+            "height": "140px",
+            "objectFit": "contain",
+            "marginLeft": "auto",
+            "marginBottom": "-12px"
+          },
+          "cardTitle": {
+            "fontSize": "20px",
+            "fontWeight": "700",
+            "color": "#333333",
+            "marginBottom": "12px"
+          },
+          "shopNowButton": {
+            "background": "#0056CC",
+            "color": "#FFFFFF",
+            "border": "none",
+            "borderRadius": "6px",
+            "padding": "10px 20px",
+            "fontSize": "13px",
+            "fontWeight": "600",
+            "cursor": "pointer",
+            "display": "inline-flex",
+            "alignItems": "center",
+            "gap": "8px",
+            "width": "fit-content",
+            "transition": "all 0.3s ease",
+            "states": {
+              "hover": {
+                "background": "#003A99",
+                "boxShadow": "0 4px 12px rgba(0,86,204,0.3)",
+                "transform": "translateY(-2px)"
+              },
+              "active": {
+                "background": "#002D7A",
+                "transform": "translateY(0)"
+              }
+            }
+          },
+          "stepperMotorsCard": {
+            "background": "linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "flex-start",
+            "minHeight": "140px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.08)",
+            "border": "1px solid rgba(200, 230, 201, 0.5)",
+            "position": "relative"
+          },
+          "stepperIcon": {
+            "width": "20px",
+            "height": "20px",
+            "marginBottom": "8px"
+          },
+          "filamentsCard": {
+            "background": "linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%)",
+            "borderRadius": "12px",
+            "padding": "24px",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "flex-start",
+            "minHeight": "140px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.08)",
+            "border": "1px solid rgba(248, 187, 208, 0.5)",
+            "position": "relative"
+          },
+          "DO_NOT": [
+            "DO NOT apply card gradients to icons",
+            "DO NOT use card background colors for text",
+            "DO NOT apply box-shadow to product images",
+            "DO NOT use the same gradient on all cards - each has unique gradient direction/colors"
+          ]
+        },
+        "categoryNavigation": {
+          "container": {
+            "display": "flex",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+            "padding": "24px",
+            "background": "#FFFFFF",
+            "borderTop": "1px solid #E8E8E8",
+            "borderBottom": "1px solid #E8E8E8",
+            "marginTop": "24px"
+          },
+          "categoryItem": {
+            "display": "flex",
+            "flexDirection": "column",
+            "alignItems": "center",
+            "gap": "8px",
+            "cursor": "pointer",
+            "padding": "12px 16px",
+            "borderRadius": "8px",
+            "transition": "all 0.3s ease",
+            "minWidth": "100px"
+          },
+          "icon": {
+            "width": "32px",
+            "height": "32px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "fontSize": "24px",
+            "color": "#0056CC"
+          },
+          "label": {
+            "fontSize": "12px",
+            "fontWeight": "600",
+            "color": "#666666",
+            "textAlign": "center",
+            "lineHeight": "1.2"
+          },
+          "states": {
+            "hover": {
+              "background": "#F5F5F5",
+              "labelColor": "#0056CC",
+              "transform": "translateY(-2px)"
+            },
+            "active": {
+              "background": "#E3F2FD",
+              "labelColor": "#0056CC",
+              "borderBottomRadius": "0"
+            }
+          },
+          "DO_NOT": [
+            "DO NOT use red or orange for category icons",
+            "DO NOT apply box-shadow to category items in normal state",
+            "DO NOT use background color darker than #F5F5F5 for hover"
+          ]
+        },
+        "contentSection": {
+          "heading": {
+            "text": "Shop with Category",
+            "fontSize": "24px",
+            "fontWeight": "700",
+            "color": "#333333",
+            "margin": "24px",
+            "marginBottom": "16px"
+          },
+          "browseLink": {
+            "fontSize": "13px",
+            "fontWeight": "600",
+            "color": "#0056CC",
+            "textDecoration": "none",
+            "cursor": "pointer",
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "6px",
+            "margin": "0 24px",
+            "transition": "all 0.3s ease",
+            "states": {
+              "hover": {
+                "color": "#003A99",
+                "arrowTransform": "translateX(4px)"
+              }
+            }
+          }
+        },
+        "button": {
+          "primary": {
+            "background": "#0056CC",
+            "color": "#FFFFFF",
+            "border": "none",
+            "borderRadius": "6px",
+            "padding": "12px 24px",
+            "fontSize": "14px",
+            "fontWeight": "600",
+            "cursor": "pointer",
+            "transition": "all 0.3s ease",
+            "textTransform": "none",
+            "display": "inline-flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "minHeight": "40px",
+            "states": {
+              "default": {
+                "background": "#0056CC",
+                "boxShadow": "none"
+              },
+              "hover": {
+                "background": "#003A99",
+                "boxShadow": "0 4px 12px rgba(0,86,204,0.3)",
+                "transform": "translateY(-2px)"
+              },
+              "active": {
+                "background": "#002D7A",
+                "transform": "translateY(0)",
+                "boxShadow": "0 2px 4px rgba(0,86,204,0.2)"
+              },
+              "disabled": {
+                "background": "#D0D0D0",
+                "color": "#999999",
+                "cursor": "not-allowed",
+                "transform": "none"
+              },
+              "focus": {
+                "outline": "2px solid #003A99",
+                "outlineOffset": "2px"
+              }
+            }
+          },
+          "secondary": {
+            "background": "transparent",
+            "color": "#0056CC",
+            "border": "1px solid #0056CC",
+            "borderRadius": "6px",
+            "padding": "10px 20px",
+            "fontSize": "13px",
+            "fontWeight": "600",
+            "cursor": "pointer",
+            "transition": "all 0.3s ease",
+            "states": {
+              "hover": {
+                "background": "#E3F2FD",
+                "borderColor": "#003A99",
+                "color": "#003A99"
+              }
+            }
+          },
+          "DO_NOT": [
+            "DO NOT use red backgrounds for primary buttons",
+            "DO NOT remove hover state visual feedback",
+            "DO NOT use button gradients - stick to solid colors"
+          ]
+        },
+        "badge": {
+          "category": {
+            "background": "#FF9500",
+            "color": "#FFFFFF",
+            "borderRadius": "12px",
+            "padding": "4px 8px",
+            "fontSize": "11px",
+            "fontWeight": "600",
+            "display": "inline-block",
+            "position": "absolute",
+            "top": "12px",
+            "left": "12px"
+          },
+          "notification": {
+            "background": "#E63946",
+            "color": "#FFFFFF",
+            "borderRadius": "50%",
+            "width": "18px",
+            "height": "18px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "fontSize": "10px",
+            "fontWeight": "bold"
+          }
+        },
+        "shadows": {
+          "subtle": "0 2px 8px rgba(0,0,0,0.08)",
+          "medium": "0 4px 12px rgba(0,0,0,0.1)",
+          "prominent": "0 8px 24px rgba(0,0,0,0.12)",
+          "blueTinted": "0 4px 12px rgba(0,86,204,0.3)"
+        }
+      },
+      "typography": {
+        "fontFamily": "system-ui, -apple-system, sans-serif",
+        "scale": {
+          "h1": {
+            "fontSize": "28px",
+            "fontWeight": "700",
+            "lineHeight": "1.3",
+            "color": "#333333"
+          },
+          "h2": {
+            "fontSize": "24px",
+            "fontWeight": "700",
+            "lineHeight": "1.3",
+            "color": "#333333"
+          },
+          "h3": {
+            "fontSize": "20px",
+            "fontWeight": "700",
+            "lineHeight": "1.4",
+            "color": "#333333"
+          },
+          "body": {
+            "fontSize": "14px",
+            "fontWeight": "400",
+            "lineHeight": "1.5",
+            "color": "#666666"
+          },
+          "caption": {
+            "fontSize": "12px",
+            "fontWeight": "600",
+            "lineHeight": "1.4",
+            "color": "#999999"
+          },
+          "label": {
+            "fontSize": "13px",
+            "fontWeight": "600",
+            "lineHeight": "1.4",
+            "color": "#333333"
+          }
+        }
+      },
+      "spacing": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "12px",
+        "lg": "16px",
+        "xl": "24px",
+        "2xl": "32px",
+        "3xl": "48px"
+      },
+      "borderRadius": {
+        "none": "0",
+        "sm": "4px",
+        "md": "6px",
+        "lg": "8px",
+        "xl": "12px",
+        "full": "9999px"
+      },
+      "transitions": {
+        "fast": "0.15s ease",
+        "standard": "0.3s ease",
+        "slow": "0.5s ease"
+      },
+      "gradients": {
+        "hero": {
+          "name": "Light Blue",
+          "direction": "135deg",
+          "startColor": "#E3F2FD",
+          "endColor": "#B3E5FC",
+          "angle": "135deg",
+          "application": "Hero carousel slides, promotional banner backgrounds"
+        },
+        "stepper": {
+          "name": "Light Green",
+          "direction": "135deg",
+          "startColor": "#E8F5E9",
+          "endColor": "#C8E6C9",
+          "application": "Stepper motor product card"
+        },
+        "filament": {
+          "name": "Light Pink",
+          "direction": "135deg",
+          "startColor": "#FCE4EC",
+          "endColor": "#F8BBD0",
+          "application": "3D Printer Filament product card"
+        },
+        "DO_NOT": [
+          "DO NOT use the same gradient for all promotional cards",
+          "DO NOT apply gradients to text elements",
+          "DO NOT apply card gradients to buttons",
+          "DO NOT invert gradient colors for hover states"
+        ]
+      },
+      "states": {
+        "hover": {
+          "general": {
+            "duration": "0.3s",
+            "easing": "ease",
+            "effects": [
+              "Subtle background color shift (if applicable)",
+              "Slight transform: translateY(-2px) for elevation",
+              "Enhanced box-shadow for depth",
+              "Color intensification for text/icons"
+            ]
+          }
+        },
+        "active": {
+          "general": {
+            "duration": "0.2s",
+            "easing": "ease-in",
+            "effects": [
+              "Pressed appearance: slight inset shadow or reduced elevation",
+              "Darker or more saturated color",
+              "Transform resets: translateY(0)"
+            ]
+          }
+        },
+        "disabled": {
+          "general": {
+            "appearance": {
+              "opacity": "0.5 or desaturated",
+              "cursor": "not-allowed",
+              "color": "#D0D0D0 or #999999"
+            }
+          }
+        },
+        "focus": {
+          "general": {
+            "appearance": "2px solid outline in brand color with 2px offset"
+          }
+        }
+      },
+      "accessibility": {
+        "colorContrast": {
+          "textOnWhite": {
+            "darkText": "#333333 (18.5:1 WCAG AAA)",
+            "mediumText": "#666666 (8:1 WCAG AA)"
+          },
+          "textOnBlue": {
+            "white": "#FFFFFF (8.6:1 WCAG AA)"
+          },
+          "textOnLightGradient": {
+            "darkText": "#333333 (min 7:1)"
+          }
+        },
+        "interactiveElements": {
+          "minTouchTarget": "40x40px",
+          "minClickTarget": "24x24px",
+          "spacing": "minimum 8px between clickable elements"
+        },
+        "focusIndicators": {
+          "visible": "Yes",
+          "color": "#0056CC",
+          "width": "2px",
+          "offset": "2px"
+        }
+      },
+      "responsiveDesign": {
+        "breakpoints": {
+          "mobile": "0px",
+          "tablet": "768px",
+          "desktop": "1024px",
+          "wide": "1440px"
+        },
+        "gridSystem": {
+          "columns": "12",
+          "gutter": "24px",
+          "containerMax": "1400px"
+        }
+      },
+      "implementationNotes": {
+        "DO_NOT_RULES": [
+          "DO NOT apply card background gradients to icon containers",
+          "DO NOT use card border-radius on buttons within cards",
+          "DO NOT apply multiple box-shadows to the same element (choose subtle OR medium, not both)",
+          "DO NOT use text color from one element category on another (e.g., heading color on body text)",
+          "DO NOT apply blue primary color to secondary elements",
+          "DO NOT use orange badges for non-product categories",
+          "DO NOT apply hover transform to category icons - only apply to containers",
+          "DO NOT use red color for primary CTAs - reserve for notifications/badges",
+          "DO NOT apply card-specific gradients outside of card containers",
+          "DO NOT remove or hide focus states for keyboard navigation"
+        ],
+        "COLOR_MAPPING_RULES": [
+          "Primary CTA buttons: #0056CC background, #FFFFFF text",
+          "Category icons: #0056CC fill only",
+          "Hover backgrounds: #F5F5F5 (max darkness allowed)",
+          "Badge notifications: #E63946 background",
+          "Success/growth elements: Teals/greens from card gradients",
+          "Card backgrounds: Use full gradient (not just start or end color)",
+          "Text hierarchy: #333333 (primary), #666666 (secondary), #999999 (tertiary)",
+          "Borders/dividers: #E8E8E8 or gradient transparent edges",
+          "Shadows: Use subtle for small elements, medium for cards"
+        ],
+        "GRADIENT_APPLICATION": [
+          "Hero slides: Linear 135deg with light blue-to-blue gradient",
+          "Product cards: Each has unique color pair (never reuse hero gradient on products)",
+          "Never apply gradients to: text, icons (unfilled), borders, buttons",
+          "Gradient backgrounds: Always pair with solid border color (50% opacity of gradient end)"
+        ]
+      }
+    }
+  }
