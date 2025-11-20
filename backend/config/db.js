@@ -4,14 +4,24 @@ const mongoose = require('mongoose');
  * Connect to MongoDB database
  * @returns {Promise<void>}
  */
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+let cachedConnection = null;
 
+const connectDB = async () => {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      bufferCommands: false,
+    });
+
+    cachedConnection = conn;
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    return conn;
   } catch (error) {
     console.error(`Error: ${error.message}`);
-    process.exit(1);
+    throw error;
   }
 };
 
