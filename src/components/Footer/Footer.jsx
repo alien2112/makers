@@ -39,15 +39,29 @@ const Footer = () => {
           <div className="footer-logo-section">
             <div className="footer-logo-icon">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="8" r="4" fill="#0056CC"/>
-                <circle cx="30" cy="8" r="4" fill="#0056CC"/>
-                <path d="M8 20 L8 32 L12 32 L12 20 Z" fill="#0056CC"/>
-                <path d="M28 20 L28 32 L32 32 L32 20 Z" fill="#0056CC"/>
-                <path d="M8 32 L12 32 L20 24 L28 32 L32 32 L20 16 Z" fill="#0056CC"/>
+                <defs>
+                  <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#0056CC" stopOpacity="1" />
+                    <stop offset="100%" stopColor="#003d99" stopOpacity="1" />
+                  </linearGradient>
+                </defs>
+                <rect x="4" y="4" width="8" height="28" fill="url(#footerGradient)" rx="4"/>
+                <rect x="4" y="14" width="8" height="6" fill="#E63946" rx="3"/>
+                <rect x="4" y="26" width="8" height="6" fill="#E63946" rx="3"/>
+                <circle cx="8" cy="8" r="2.5" fill="url(#footerGradient)"/>
+                <circle cx="8" cy="17" r="2" fill="#FFFFFF"/>
+                <circle cx="8" cy="29" r="2" fill="#FFFFFF"/>
+                <path d="M 12 4 L 12 32" stroke="url(#footerGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M 12 17 L 20 17" stroke="url(#footerGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M 12 29 L 20 29" stroke="url(#footerGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                <rect x="20" y="4" width="8" height="28" fill="url(#footerGradient)" rx="4"/>
+                <circle cx="24" cy="8" r="2.5" fill="#E63946"/>
+                <circle cx="24" cy="17" r="2" fill="#FFFFFF"/>
+                <circle cx="24" cy="29" r="2" fill="#FFFFFF"/>
               </svg>
             </div>
-            <h2 className="footer-logo-text">MAKERS</h2>
-            <p className="footer-logo-tagline">WE MAKE THE FUTURE</p>
+            <h2 className="footer-logo-text">TechHub</h2>
+            <p className="footer-logo-tagline">YOUR ELECTRONICS HUB</p>
           </div>
 
           {/* Top Categories */}
@@ -86,7 +100,7 @@ const Footer = () => {
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.88L8 10.08l-6.966 4.183A1 1 0 0 0 2 15h12a1 1 0 0 0 .966-.737ZM1 11.105l4.708-2.897L1 5.383v5.722Z" fill="currentColor"/>
                 </svg>
-                <span>Email: info@makerselectronics.com</span>
+                <span>Email: info@techhub-electronics.com</span>
               </div>
               <div className="footer-contact-item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +122,7 @@ const Footer = () => {
       {/* Bottom Blue Footer Bar */}
       <div className="footer-bottom-bar">
         <div className="footer-bottom-container">
-          <p>&copy; 2025 Makers Electronics. All rights reserved</p>
+          <p>&copy; 2025 TechHub Electronics. All rights reserved</p>
         </div>
       </div>
 

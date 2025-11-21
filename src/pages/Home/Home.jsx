@@ -380,7 +380,7 @@ const Home = () => {
       <div className="promotional-banners-section">
         <div className="promo-banner promo-banner-dark">
           <div className="promo-banner-content">
-            <h3 className="promo-banner-title">EXCLUSIVE IN MAKERS ELECTRONICS</h3>
+            <h3 className="promo-banner-title">EXCLUSIVE IN TECHHUB ELECTRONICS</h3>
             <Link to="/products" className="promo-banner-btn">
               CHECK NOW →
             </Link>
@@ -413,7 +413,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Why Makers Section */}
       <SectionWrapper>
         <div className="why-makers-section">
           <motion.h2 
@@ -423,7 +422,7 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Why Makers!
+            Why TechHub!
           </motion.h2>
           <div className="why-makers-grid">
             {whyMakersFeatures.map((feature, index) => (

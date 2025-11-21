@@ -49,7 +49,7 @@ const About = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          About "MAKERS Electronics"
+          About "TechHub Electronics"
         </motion.div>
 
         {/* Section 1: WHO ARE WE? - Text Left, Image Right */}
@@ -64,9 +64,9 @@ const About = () => {
               <div className="section-label">WHO ARE WE?</div>
               <h2 className="section-heading">Leading Electronics Supplier</h2>
               <p className="section-text">
-                "MAKERS" is a leading Egyptian company in Electronics supplies and spare parts. 
+                "TechHub Electronics" is a leading Egyptian company in Electronics supplies and spare parts. 
                 We provide electronics Geeks or professionals with the best electronic components 
-                and devices to help them make and build smart projects. MAKERS always work to 
+                and devices to help them make and build smart projects. TechHub always works to 
                 develop and support the electronics field in Egypt to create a creative community 
                 of electronics Geeks and everyone loves electronics meetings with a making mentality.
               </p>
@@ -215,14 +215,14 @@ const About = () => {
               <div className="section-label">OUR COMMUNITY</div>
               <h2 className="section-heading">Building the Future Together</h2>
               <p className="section-text">
-                MAKERS is more than just a supplier - we're a community hub for electronics enthusiasts. 
+                TechHub is more than just a supplier - we're a community hub for electronics enthusiasts. 
                 We organize meetups, workshops, and events that bring together makers, engineers, and 
                 innovators to share knowledge, collaborate on projects, and push the boundaries of what's possible.
               </p>
               <p className="section-text">
                 Whether you're a student working on your first Arduino project, a professional engineer 
                 developing cutting-edge solutions, or a hobbyist exploring the world of electronics, 
-                you'll find a welcoming community at MAKERS.
+                you'll find a welcoming community at TechHub.
               </p>
             </motion.div>
             

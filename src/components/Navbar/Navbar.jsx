@@ -91,7 +91,7 @@ const Navbar = () => {
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             <img 
               src="/logo.svg" 
-              alt="MAKERS Electronics Logo" 
+              alt="TechHub Electronics Logo" 
               className="logo-image"
             />
           </Link>
@@ -213,15 +213,30 @@ const Navbar = () => {
                 <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
                   <div className="logo-icon">
                     <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="10" cy="8" r="4" fill="#0056CC"/>
-                      <path d="M8 20 L8 32 L12 32 L12 20 Z" fill="#0056CC"/>
-                      <path d="M28 20 L28 32 L32 32 L32 20 Z" fill="#0056CC"/>
-                      <path d="M8 32 L12 32 L20 24 L28 32 L32 32 L20 16 Z" fill="#0056CC"/>
+                      <defs>
+                        <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#0056CC" stopOpacity="1" />
+                          <stop offset="100%" stopColor="#003d99" stopOpacity="1" />
+                        </linearGradient>
+                      </defs>
+                      <rect x="4" y="4" width="8" height="28" fill="url(#mobileGradient)" rx="4"/>
+                      <rect x="4" y="14" width="8" height="6" fill="#E63946" rx="3"/>
+                      <rect x="4" y="26" width="8" height="6" fill="#E63946" rx="3"/>
+                      <circle cx="8" cy="8" r="2.5" fill="url(#mobileGradient)"/>
+                      <circle cx="8" cy="17" r="2" fill="#FFFFFF"/>
+                      <circle cx="8" cy="29" r="2" fill="#FFFFFF"/>
+                      <path d="M 12 4 L 12 32" stroke="url(#mobileGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M 12 17 L 20 17" stroke="url(#mobileGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M 12 29 L 20 29" stroke="url(#mobileGradient)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <rect x="20" y="4" width="8" height="28" fill="url(#mobileGradient)" rx="4"/>
+                      <circle cx="24" cy="8" r="2.5" fill="#E63946"/>
+                      <circle cx="24" cy="17" r="2" fill="#FFFFFF"/>
+                      <circle cx="24" cy="29" r="2" fill="#FFFFFF"/>
                     </svg>
                   </div>
                   <div className="logo-text-section">
                     <h1 className="logo-text">
-                      <span className="logo-m-red">M</span>AKERS
+                      <span className="logo-m-red">T</span>echHub
                     </h1>
                   </div>
                 </Link>

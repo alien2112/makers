@@ -49,7 +49,7 @@ const CustomerService = () => {
             <h2>Need More Help?</h2>
             <p>Contact our support team:</p>
             <div className="contact-info">
-              <p><strong>Email:</strong> support@makers.com</p>
+              <p><strong>Email:</strong> support@techhub-electronics.com</p>
               <p><strong>Phone:</strong> +20 123 456 7890</p>
               <p><strong>Hours:</strong> Monday - Friday, 9 AM - 6 PM</p>
             </div>

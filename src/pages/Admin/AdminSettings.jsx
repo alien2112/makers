@@ -5,8 +5,8 @@ import './AdminSettings.css';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
-    siteName: 'MAKERS Electronics',
-    siteEmail: 'admin@makers.com',
+    siteName: 'TechHub Electronics',
+    siteEmail: 'admin@techhub-electronics.com',
     maintenanceMode: false,
     allowRegistrations: true,
     orderAutoConfirm: false,

@@ -6,9 +6,9 @@ const Blog = () => {
     <div className="blog-page">
       <div className="blog-header">
         <div className="blog-header-content">
-          <h1 className="blog-header-title">MAKERS Blog</h1>
+          <h1 className="blog-header-title">TechHub Blog</h1>
           <p className="blog-header-description">
-            We&apos;re working on publishing real build logs, sourcing tips, and release announcements from the MAKERS engineering team. Subscribe below and we&apos;ll email you as soon as the first post goes live.
+            We&apos;re working on publishing real build logs, sourcing tips, and release announcements from the TechHub engineering team. Subscribe below and we&apos;ll email you as soon as the first post goes live.
           </p>
         </div>
       </div>
@@ -22,7 +22,7 @@ const Blog = () => {
               In the meantime, browse the store or follow us on social for behind-the-scenes progress.
             </p>
             <div className="blog-empty-actions">
-              <a href="mailto:hello@makers.com" className="blog-action primary">Contact us</a>
+              <a href="mailto:hello@techhub-electronics.com" className="blog-action primary">Contact us</a>
               <Link to="/products" className="blog-action secondary">Browse products</Link>
             </div>
           </div>

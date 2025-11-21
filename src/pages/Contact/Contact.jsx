@@ -59,7 +59,7 @@ const Contact = () => {
                 </div>
                 <div className="contact-info-content">
                   <h3 className="contact-info-label">EMAIL ADDRESS:</h3>
-                  <p className="contact-info-text">info@makerselectronics.com</p>
+                  <p className="contact-info-text">info@techhub-electronics.com</p>
                 </div>
               </div>
 
@@ -124,7 +124,7 @@ const Contact = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Makers Electronics Location - 158 Elhorya St., Elibrahymia, Alexandria, Egypt"
+              title="TechHub Electronics Location - 158 Elhorya St., Elibrahymia, Alexandria, Egypt"
               className="google-map"
             ></iframe>
           </div>
