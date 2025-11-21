@@ -30,3 +30,4 @@ const imageMappingSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('ImageMapping', imageMappingSchema);
 
+
