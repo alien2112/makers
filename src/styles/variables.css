@@ -1,71 +1,107 @@
-/* Design System Variables from desgin.json */
-
 :root {
-  /* Primary Colors */
   --primary-blue: #0056CC;
   --primary-dark-blue: #003A99;
   --primary-light-blue: #007AFF;
+  --primary-blue-hover: #0044A3;
+  --primary-blue-light: #E3F2FD;
 
-  /* Accent Colors */
   --accent-red: #E63946;
   --accent-teal: #4ECDC4;
   --accent-orange: #FF9500;
+  --accent-green: #25D366;
 
-  /* Neutral Colors */
   --neutral-white: #FFFFFF;
-  --neutral-light-gray: #F5F5F5;
-  --neutral-medium-gray: #E8E8E8;
-  --neutral-dark-gray: #666666;
-  --neutral-text-dark: #333333;
-  --neutral-text-light: #999999;
+  --neutral-light-gray: #F8F9FA;
+  --neutral-medium-gray: #E9ECEF;
+  --neutral-dark-gray: #6C757D;
+  --neutral-text-dark: #212529;
+  --neutral-text-light: #ADB5BD;
+  --neutral-border: #DEE2E6;
 
-  /* Backgrounds */
-  --bg-page: #FAFAFA;
-  --bg-card-light: #F0F8FB;
+  --bg-page: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-light: #F8F9FA;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-2xl: 32px;
-  --spacing-3xl: 48px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
 
-  /* Border Radius */
   --radius-none: 0;
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-subtle: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-medium: 0 4px 12px rgba(0,0,0,0.1);
-  --shadow-prominent: 0 8px 24px rgba(0,0,0,0.12);
-  --shadow-blue-tinted: 0 4px 12px rgba(0,86,204,0.3);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+  --shadow-blue: 0 4px 16px rgba(0, 86, 204, 0.2);
+  --shadow-blue-lg: 0 8px 32px rgba(0, 86, 204, 0.25);
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-standard: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slower: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Typography */
-  --font-family: system-ui, -apple-system, sans-serif;
-  --font-size-h1: 28px;
-  --font-size-h2: 24px;
-  --font-size-h3: 20px;
-  --font-size-body: 14px;
-  --font-size-caption: 12px;
-  --font-size-label: 13px;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  --font-size-xs: clamp(0.6875rem, 0.65rem + 0.15vw, 0.75rem);
+  --font-size-sm: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --font-size-base: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+  --font-size-lg: clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);
+  --font-size-xl: clamp(1.1875rem, 1.14rem + 0.2vw, 1.25rem);
+  --font-size-2xl: clamp(1.375rem, 1.3rem + 0.3vw, 1.5rem);
+  --font-size-3xl: clamp(1.625rem, 1.5rem + 0.5vw, 1.875rem);
+  --font-size-4xl: clamp(1.875rem, 1.7rem + 0.7vw, 2.25rem);
+  --font-size-5xl: clamp(2.25rem, 2rem + 1vw, 3rem);
+  
+  --font-size-h1: var(--font-size-4xl);
+  --font-size-h2: var(--font-size-3xl);
+  --font-size-h3: var(--font-size-2xl);
+  --font-size-body: var(--font-size-base);
+  --font-size-caption: var(--font-size-sm);
+  --font-size-label: var(--font-size-sm);
 
-  /* Breakpoints */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+
   --breakpoint-mobile: 0px;
   --breakpoint-tablet: 768px;
   --breakpoint-desktop: 1024px;
-  --breakpoint-wide: 1440px;
+  --breakpoint-wide: 1280px;
+  --breakpoint-ultrawide: 1536px;
 }
+
 
 
 

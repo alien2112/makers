@@ -5,7 +5,7 @@ const {
   uploadSingleImage
 } = require('../controllers/uploadController');
 const { protect, adminOnly } = require('../middleware/auth');
-const upload = require('../utils/upload');
+const { upload } = require('../utils/upload');
 
 // All routes require authentication and admin privileges
 router.use(protect, adminOnly);

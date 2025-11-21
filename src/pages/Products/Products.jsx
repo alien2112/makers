@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import Loader from '../../components/Loader/Loader';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -109,7 +110,12 @@ const Products = () => {
       <Breadcrumb items={breadcrumbItems} />
       <div className="products-container">
         <div className="products-layout">
-          <aside className="categories-sidebar">
+          <motion.aside 
+            className="categories-sidebar"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+          >
             <h2 className="categories-title">Categories</h2>
             {categoriesLoading ? (
               <Loader />
@@ -118,20 +124,25 @@ const Products = () => {
                 {categoryList.length === 0 ? (
                   <p>No categories found.</p>
                 ) : (
-                  categoryList.map((category) => (
-                    <button
+                  categoryList.map((category, index) => (
+                    <motion.button
                       key={category.id}
                       type="button"
                       className={`category-pill ${selectedCategory === category.name ? 'active' : ''}`}
                       onClick={() => handleCategorySelect(category.name)}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: index * 0.03 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       {category.name}
-                    </button>
+                    </motion.button>
                   ))
                 )}
               </div>
             )}
-          </aside>
+          </motion.aside>
 
           <div className="products-main">
             <div className="products-controls">
@@ -182,15 +193,27 @@ const Products = () => {
               <>
                 <div className="products-grid">
                   {products.length > 0 ? (
-                    products.map((product) => (
-                      <ProductCard
+                    products.map((product, index) => (
+                      <motion.div
                         key={product.id}
-                        product={product}
-                        onAddToCart={() => addToCart(product)}
-                      />
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                      >
+                        <ProductCard
+                          product={product}
+                          onAddToCart={() => addToCart(product)}
+                        />
+                      </motion.div>
                     ))
                   ) : (
-                    <p className="no-products">No products found.</p>
+                    <motion.p 
+                      className="no-products"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      No products found.
+                    </motion.p>
                   )}
                 </div>
                 {meta.pages > 1 && (

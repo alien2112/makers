@@ -183,3 +183,48 @@ export const deleteProduct = async (productId) => {
 
   throw new Error(response.message || 'Failed to delete product');
 };
+
+/**
+ * Upload product images (Admin only)
+ */
+export const uploadProductImages = async (imageFiles) => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const user = localStorage.getItem('user');
+  let token = null;
+  
+  if (user) {
+    try {
+      const userData = JSON.parse(user);
+      token = userData.token;
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+    }
+  }
+
+  const formData = new FormData();
+  
+  // Append all image files
+  imageFiles.forEach((file) => {
+    formData.append('images', file);
+  });
+
+  const response = await fetch(`${API_BASE_URL}/upload/product`, {
+    method: 'POST',
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to upload images');
+  }
+
+  if (data.success && data.data) {
+    return data.data;
+  }
+
+  throw new Error(data.message || 'Failed to upload images');
+};

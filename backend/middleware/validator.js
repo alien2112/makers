@@ -134,3 +134,45 @@ exports.wishlistSyncValidation = [
     .optional()
     .isMongoId().withMessage('Each product ID must be a valid Mongo ID')
 ];
+
+/**
+ * Validation rules for special order creation
+ */
+exports.specialOrderValidation = [
+  body('firstName')
+    .trim()
+    .notEmpty().withMessage('First name is required')
+    .isLength({ min: 2, max: 50 }).withMessage('First name must be between 2 and 50 characters'),
+  body('lastName')
+    .optional()
+    .trim()
+    .isLength({ max: 50 }).withMessage('Last name cannot exceed 50 characters'),
+  body('phone')
+    .trim()
+    .notEmpty().withMessage('Phone number is required')
+    .isLength({ min: 10, max: 20 }).withMessage('Phone number must be between 10 and 20 characters'),
+  body('email')
+    .optional()
+    .trim()
+    .isEmail().withMessage('Please provide a valid email')
+    .normalizeEmail(),
+  body('products')
+    .isArray({ min: 1 }).withMessage('At least one product is required'),
+  body('products.*.name')
+    .trim()
+    .notEmpty().withMessage('Product name is required')
+    .isLength({ max: 200 }).withMessage('Product name cannot exceed 200 characters'),
+  body('products.*.quantity')
+    .optional()
+    .isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
+  body('products.*.targetPrice')
+    .optional()
+    .isFloat({ min: 0 }).withMessage('Target price must be a positive number'),
+  body('products.*.referenceUrl')
+    .optional()
+    .isURL().withMessage('Reference URL must be a valid URL'),
+  body('notes')
+    .optional()
+    .trim()
+    .isLength({ max: 1000 }).withMessage('Notes cannot exceed 1000 characters')
+];

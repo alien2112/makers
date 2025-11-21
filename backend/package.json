@@ -8,6 +8,8 @@
     "dev": "nodemon server.js",
     "seed": "node utils/seeder.js -i",
     "seed:delete": "node utils/seeder.js -d",
+    "migrate:images": "node utils/migrateImages.js",
+    "create-indexes": "node utils/createIndexes.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["ecommerce", "api", "express", "mongodb"],

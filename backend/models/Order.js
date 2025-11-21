@@ -105,7 +105,7 @@ const orderSchema = new mongoose.Schema({
 
 // Generate unique order number before saving
 orderSchema.pre('save', async function(next) {
-  if (this.isNew) {
+  if (this.isNew && !this.orderNumber) {
     // Generate order number: ORD-YYYYMMDD-XXXXX
     const date = new Date();
     const dateStr = date.getFullYear() +
@@ -113,13 +113,16 @@ orderSchema.pre('save', async function(next) {
                     String(date.getDate()).padStart(2, '0');
     const random = String(Math.floor(Math.random() * 100000)).padStart(5, '0');
     this.orderNumber = `ORD-${dateStr}-${random}`;
+  }
 
-    // Add initial status to history
-    this.statusHistory.push({
+  // Add initial status to history for new orders
+  if (this.isNew && (!this.statusHistory || this.statusHistory.length === 0)) {
+    this.statusHistory = [{
       status: this.status,
       timestamp: new Date()
-    });
+    }];
   }
+  
   next();
 });
 

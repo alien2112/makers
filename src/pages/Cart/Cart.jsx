@@ -85,17 +85,19 @@ const Cart = () => {
           </div>
           <div className="cart-summary">
             <h2>Order Summary</h2>
-            <div className="summary-row">
-              <span>Subtotal</span>
-              <span>{`${getCartTotal().toFixed(2)} EGP`}</span>
-            </div>
-            <div className="summary-row">
-              <span>Shipping</span>
-              <span>Free</span>
-            </div>
-            <div className="summary-row total">
-              <span>Total</span>
-              <span>{`${getCartTotal().toFixed(2)} EGP`}</span>
+            <div className="summary-totals">
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span>{`${getCartTotal().toFixed(2)} EGP`}</span>
+              </div>
+              <div className="summary-row">
+                <span>Shipping</span>
+                <span>Free</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span>{`${getCartTotal().toFixed(2)} EGP`}</span>
+              </div>
             </div>
             <Link to="/checkout" className="checkout-btn">
               Proceed to Checkout

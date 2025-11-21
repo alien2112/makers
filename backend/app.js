@@ -5,19 +5,15 @@ const morgan = require('morgan');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 
-// Load environment variables once
 dotenv.config();
 
-// Connect to MongoDB
 connectDB();
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS setup
 const defaultOrigins = ['http://localhost:3000', 'http://localhost:5173'];
 const envOrigins = process.env.FRONTEND_URLS || process.env.FRONTEND_URL;
 const allowedOrigins = Array.from(new Set([
@@ -38,15 +34,14 @@ app.use(cors({
   credentials: true
 }));
 
-// Logging middleware (only in development)
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Static files for uploads
+app.get('/uploads/products/:filename', require('./controllers/imageController').serveImage);
+
 app.use('/uploads', express.static('uploads'));
 
-// API Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
@@ -57,7 +52,6 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/special-orders', require('./routes/specialOrderRoutes'));
 app.use('/api/wishlist', require('./routes/wishlistRoutes'));
 
-// Health check route
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -66,7 +60,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -74,7 +67,6 @@ app.use((req, res) => {
   });
 });
 
-// Error handling middleware (must be last)
 app.use(errorHandler);
 
 module.exports = app;

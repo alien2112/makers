@@ -1,11 +1,30 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 import Slider from '../../components/Slider/Slider';
 import CategoryCard from '../../components/CategoryCard/CategoryCard';
+import ProductCard from '../../components/ProductCard/ProductCard';
 import { getFeaturedProducts } from '../../api/products';
 import { getCategories } from '../../api/categories';
 import { useCart } from '../../context/CartContext';
 import './Home.css';
+
+const SectionWrapper = ({ children, className = '' }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -206,30 +225,47 @@ const Home = () => {
       </div>
 
       {/* Category Navigation Icons */}
-      <div className="category-navigation">
-        <div className="category-icons-container">
-          {categoryIcons.map((category, index) => (
-            <div key={index} className="category-icon-item">
-              <div className="category-icon-svg">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="3" y="3" width="18" height="18" rx="2" stroke="#0056CC" strokeWidth="2" fill="none"/>
-                  <path d="M3 9H21M9 3V21" stroke="#0056CC" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <div className="category-icon-label">{category.name}</div>
-            </div>
-          ))}
+      <SectionWrapper>
+        <div className="category-navigation">
+          <div className="category-icons-container">
+            {categoryIcons.map((category, index) => (
+              <motion.div 
+                key={index} 
+                className="category-icon-item"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                whileHover={{ y: -4, scale: 1.05 }}
+              >
+                <div className="category-icon-svg">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="#0056CC" strokeWidth="2" fill="none"/>
+                    <path d="M3 9H21M9 3V21" stroke="#0056CC" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div className="category-icon-label">{category.name}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </SectionWrapper>
 
       {/* Shop with Category Section */}
-      <div className="shop-category-section">
-        <div className="shop-category-header">
-          <h2 className="shop-category-heading">Shop with Category</h2>
-          <Link to="/categories" className="browse-all-link">
-            Browse All Categories →
-          </Link>
-        </div>
+      <SectionWrapper>
+        <div className="shop-category-section">
+          <motion.div 
+            className="shop-category-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="shop-category-heading">Shop with Category</h2>
+            <Link to="/categories" className="browse-all-link">
+              Browse All Categories →
+            </Link>
+          </motion.div>
         <div className="shop-category-scroll-wrapper">
           <button 
             className="category-scroll-arrow category-scroll-arrow-left"
@@ -242,12 +278,20 @@ const Home = () => {
           </button>
           <div className="shop-category-scroll" ref={categoryScrollRef}>
             {shopCategories.map((category, index) => (
-              <div key={index} className="shop-category-card">
+              <motion.div 
+                key={index} 
+                className="shop-category-card"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+              >
                 <div className="shop-category-image">
                   <img src={category.image} alt={category.name} />
                 </div>
                 <div className="shop-category-name">{category.name}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <button 
@@ -260,34 +304,39 @@ const Home = () => {
             </svg>
           </button>
         </div>
-      </div>
+        </div>
+      </SectionWrapper>
 
       {/* Products Section */}
-      <div className="content-section">
-        <div className="products-grid">
-          {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <div className="product-image">
-                <span className="badge">New</span>
-                <img 
-                  src={product.image || 'https://via.placeholder.com/300x200'} 
-                  alt={product.name}
+      <SectionWrapper>
+        <div className="content-section">
+          <motion.h2 
+            className="section-title"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Featured Products
+          </motion.h2>
+          <div className="products-grid">
+            {products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <ProductCard
+                  product={product}
+                  onAddToCart={() => addToCart(product)}
                 />
-              </div>
-              <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-price">${product.price}</p>
-                <button
-                  className="add-to-cart-btn"
-                  onClick={() => addToCart(product)}
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </SectionWrapper>
 
       {/* Featured Categories Section */}
       <div className="featured-categories-section">
@@ -365,19 +414,41 @@ const Home = () => {
       </div>
 
       {/* Why Makers Section */}
-      <div className="why-makers-section">
-        <h2 className="section-title">Why Makers!</h2>
-        <div className="why-makers-grid">
-          {whyMakersFeatures.map((feature, index) => (
-            <div key={index} className="why-makers-card">
-              <div className="why-makers-icon">
-                {feature.icon}
-              </div>
-              <h3 className="why-makers-title">{feature.title}</h3>
-            </div>
-          ))}
+      <SectionWrapper>
+        <div className="why-makers-section">
+          <motion.h2 
+            className="section-title"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Why Makers!
+          </motion.h2>
+          <div className="why-makers-grid">
+            {whyMakersFeatures.map((feature, index) => (
+              <motion.div 
+                key={index} 
+                className="why-makers-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <motion.div 
+                  className="why-makers-icon"
+                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {feature.icon}
+                </motion.div>
+                <h3 className="why-makers-title">{feature.title}</h3>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </SectionWrapper>
 
       {/* Top Brands Section */}
       <div className="top-brands-section">

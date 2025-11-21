@@ -14,8 +14,9 @@
 .card-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
   margin: 0 0 20px 0;
+  letter-spacing: -0.3px;
 }
 
 .settings-form {
@@ -33,7 +34,7 @@
 .form-group label {
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
+  color: #334155;
 }
 
 .form-group input {
@@ -41,14 +42,20 @@
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   font-size: 14px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background: white;
+  color: #1e293b;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
 }
 
 .form-group input:focus {
   outline: none;
   border-color: #0056CC;
-  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.12);
+  transform: translateY(-1px);
 }
 
 .toggle-group {
@@ -64,6 +71,8 @@
   padding: 16px;
   background: #f8fafc;
   border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .toggle-info {
@@ -74,13 +83,13 @@
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
   margin-bottom: 4px;
 }
 
 .toggle-info p {
   font-size: 12px;
-  color: #64748b;
+  color: #475569;
   margin: 0;
 }
 
@@ -106,7 +115,7 @@
   right: 0;
   bottom: 0;
   background-color: #cbd5e1;
-  transition: 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 24px;
 }
 
@@ -118,12 +127,9 @@
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 50%;
-}
-
-.toggle-switch input:checked + .toggle-slider {
-  background-color: #0056CC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
@@ -145,24 +151,23 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .save-btn:hover {
   background: #003A99;
-  box-shadow: 0 4px 12px rgba(0, 86, 204, 0.3);
 }
 
 .cancel-btn {
   padding: 12px 24px;
   background: #f8fafc;
-  color: #475569;
+  color: #334155;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cancel-btn:hover {
@@ -186,6 +191,7 @@
     width: 100%;
   }
 }
+
 
 
 

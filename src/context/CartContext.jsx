@@ -10,13 +10,33 @@ const FILE_BASE_URL = API_BASE_URL.replace(/\/api$/, '');
 
 const resolveImageUrl = (imagePath) => {
   if (!imagePath) return null;
-  if (imagePath.startsWith('http')) return imagePath;
-  return `${FILE_BASE_URL}${imagePath}`;
+  
+  // Handle object format {url: "...", alt: "..."}
+  let url = imagePath;
+  if (typeof imagePath === 'object' && imagePath.url) {
+    url = imagePath.url;
+  }
+  
+  // Ensure url is a string
+  if (typeof url !== 'string') {
+    return null;
+  }
+  
+  if (url.startsWith('http')) return url;
+  return `${FILE_BASE_URL}${url}`;
 };
 
 const normalizeCartItems = (items = []) => items.map((item) => {
   const productData = typeof item.product === 'object' ? item.product : {};
   const id = productData._id || item.product || item.id;
+
+  // Handle images - can be array of objects or array of strings
+  let imagePath = null;
+  if (productData.images && productData.images.length > 0) {
+    imagePath = productData.images[0];
+  } else if (productData.image) {
+    imagePath = productData.image;
+  }
 
   return {
     id,
@@ -24,20 +44,29 @@ const normalizeCartItems = (items = []) => items.map((item) => {
     name: productData.name || item.name,
     price: item.price ?? productData.price ?? 0,
     quantity: item.quantity || 1,
-    image: resolveImageUrl(productData.images?.[0]),
+    image: resolveImageUrl(imagePath),
     stock: productData.stock,
   };
 });
 
 const createCartItemFromProduct = (product, quantity) => {
   const id = product?._id || product?.id;
+  
+  // Handle images - can be array of objects or array of strings, or a single image property
+  let imagePath = null;
+  if (product?.image) {
+    imagePath = product.image;
+  } else if (product?.images && product.images.length > 0) {
+    imagePath = product.images[0];
+  }
+
   return {
     id,
     _id: id,
     name: product?.name,
     price: product?.price || 0,
     quantity,
-    image: resolveImageUrl(product?.image || product?.images?.[0]),
+    image: resolveImageUrl(imagePath),
     stock: product?.stock,
   };
 };

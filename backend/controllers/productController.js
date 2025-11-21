@@ -19,20 +19,23 @@ exports.getProducts = async (req, res, next) => {
       inStock
     } = req.query;
 
-    // Build query
-    const query = { isActive: true };
-
-    // Search by name, description, or tags
-    if (search) {
-      query.$text = { $search: search };
+    const query = {};
+    if (req.query.includeInactive !== 'true') {
+      query.isActive = true;
     }
 
-    // Filter by category
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { tags: { $in: [new RegExp(search, 'i')] } }
+      ];
+    }
+
     if (category) {
       query.category = category;
     }
 
-    // Filter by price range
     if (minPrice || maxPrice) {
       query.price = {};
       if (minPrice) query.price.$gte = Number(minPrice);
@@ -44,12 +47,10 @@ exports.getProducts = async (req, res, next) => {
       query.isFeatured = true;
     }
 
-    // Filter by stock availability
     if (inStock === 'true') {
       query.stock = { $gt: 0 };
     }
 
-    // Sorting
     let sortOption = {};
     switch (sort) {
       case 'price_asc':
@@ -74,18 +75,15 @@ exports.getProducts = async (req, res, next) => {
         sortOption = { createdAt: -1 };
     }
 
-    // Pagination
     const pageNum = parseInt(page);
     const limitNum = parseInt(limit);
     const skip = (pageNum - 1) * limitNum;
 
-    // Execute query
     const products = await Product.find(query)
       .sort(sortOption)
       .skip(skip)
       .limit(limitNum);
 
-    // Get total count for pagination
     const total = await Product.countDocuments(query);
 
     res.status(200).json({
@@ -133,7 +131,36 @@ exports.getProduct = async (req, res, next) => {
  */
 exports.getCategories = async (req, res, next) => {
   try {
-    const categories = await Product.distinct('category');
+    const categoriesWithCounts = await Product.aggregate([
+      {
+        $match: { isActive: true }
+      },
+      {
+        $group: {
+          _id: '$category',
+          productCount: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    // Format categories with slug and metadata
+    const categories = categoriesWithCounts.map(cat => {
+      const name = cat._id;
+      const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+      
+      return {
+        _id: cat._id,
+        id: cat._id,
+        name: name,
+        slug: slug,
+        productCount: cat.productCount,
+        image: `/api/placeholder/400/300?text=${encodeURIComponent(name)}`,
+        description: `Browse our collection of ${name} products`
+      };
+    });
 
     res.status(200).json({
       success: true,
@@ -232,7 +259,7 @@ exports.updateProduct = async (req, res, next) => {
  */
 exports.deleteProduct = async (req, res, next) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
 
     if (!product) {
       return res.status(404).json({
@@ -240,6 +267,30 @@ exports.deleteProduct = async (req, res, next) => {
         message: 'Product not found'
       });
     }
+
+    // Delete associated images from GridFS
+    if (product.images && product.images.length > 0) {
+      const { deleteFiles } = require('../utils/gridfs');
+      const ImageMapping = require('../models/ImageMapping');
+      
+      // Extract file IDs from image URLs
+      const imagePromises = product.images.map(async (image) => {
+        if (image.url) {
+          // Extract filename from URL
+          const filename = image.url.split('/').pop();
+          
+          const mapping = await ImageMapping.findOne({ filename });
+          if (mapping) {
+            await deleteFiles([mapping.gridfsFileId]);
+            await ImageMapping.deleteOne({ _id: mapping._id });
+          }
+        }
+      });
+      
+      await Promise.all(imagePromises);
+    }
+
+    await Product.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,

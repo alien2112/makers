@@ -80,21 +80,27 @@ const AdminDashboard = () => {
   ];
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
     visible: (i) => ({
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        delay: i * 0.1,
-        duration: 0.4,
-        ease: 'easeOut',
+        delay: i * 0.08,
+        duration: 0.5,
+        ease: [0.4, 0, 0.2, 1],
       },
     }),
     hover: {
-      y: -8,
+      y: -6,
+      scale: 1.02,
       transition: {
-        duration: 0.2,
+        duration: 0.3,
+        ease: [0.4, 0, 0.2, 1],
       },
+    },
+    tap: {
+      scale: 0.98,
     },
   };
 
@@ -120,6 +126,7 @@ const AdminDashboard = () => {
             initial="hidden"
             animate="visible"
             whileHover="hover"
+            whileTap="tap"
           >
             <div className="kpi-icon" style={{ background: `${card.color}15`, color: card.color }}>
               {card.icon}
@@ -140,9 +147,10 @@ const AdminDashboard = () => {
         {/* Orders by Status */}
         <motion.div
           className="dashboard-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.4 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)' }}
         >
           <h3 className="card-title">Orders by Status</h3>
           <div className="orders-status-list">
@@ -157,7 +165,7 @@ const AdminDashboard = () => {
                     className="status-bar-fill"
                     initial={{ width: 0 }}
                     animate={{ width: `${(status.count / 150) * 100}%` }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
+                    transition={{ delay: 0.6, duration: 1, ease: [0.4, 0, 0.2, 1] }}
                     style={{ background: getStatusColor(status._id) }}
                   />
                 </div>
@@ -169,9 +177,10 @@ const AdminDashboard = () => {
         {/* Recent Orders */}
         <motion.div
           className="dashboard-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)' }}
         >
           <h3 className="card-title">Recent Orders</h3>
           <div className="recent-orders-list">
@@ -181,7 +190,8 @@ const AdminDashboard = () => {
                 className="recent-order-item"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
+                transition={{ delay: 0.6 + index * 0.08, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ x: 4, backgroundColor: '#f1f5f9' }}
               >
                 <div className="order-info">
                   <span className="order-number">{order.orderNumber}</span>
@@ -198,9 +208,10 @@ const AdminDashboard = () => {
         {/* Low Stock Products */}
         <motion.div
           className="dashboard-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.4 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.6, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)' }}
         >
           <h3 className="card-title">Low Stock Alert</h3>
           <div className="low-stock-list">
@@ -210,7 +221,8 @@ const AdminDashboard = () => {
                 className="low-stock-item"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 + index * 0.1, duration: 0.3 }}
+                transition={{ delay: 0.7 + index * 0.08, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ x: 4, scale: 1.01 }}
               >
                 <div className="stock-info">
                   <span className="stock-name">{product.name}</span>
@@ -225,9 +237,10 @@ const AdminDashboard = () => {
         {/* Best Selling Products */}
         <motion.div
           className="dashboard-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.4 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.7, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)' }}
         >
           <h3 className="card-title">Best Selling Products</h3>
           <div className="best-selling-list">
@@ -237,7 +250,8 @@ const AdminDashboard = () => {
                 className="best-selling-item"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 + index * 0.1, duration: 0.3 }}
+                transition={{ delay: 0.8 + index * 0.08, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ x: 4, backgroundColor: '#f1f5f9' }}
               >
                 <div className="selling-info">
                   <span className="selling-name">{product.name}</span>

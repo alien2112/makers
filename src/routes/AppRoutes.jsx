@@ -3,6 +3,7 @@ import Home from '../pages/Home/Home';
 import Products from '../pages/Products/Products';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
 import Categories from '../pages/Categories/Categories';
+import CategoryProducts from '../pages/CategoryProducts/CategoryProducts';
 import Blog from '../pages/Blog/Blog';
 import BlogArticle from '../pages/BlogArticle/BlogArticle';
 import About from '../pages/About/About';
@@ -36,6 +37,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<ProductDetails />} />
+      <Route path="/categories/:slug" element={<CategoryProducts />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:id" element={<BlogArticle />} />

@@ -1,17 +1,9 @@
 const multer = require('multer');
 const path = require('path');
+const { uploadFile } = require('./gridfs');
 
-// Configure storage
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, 'uploads/products');
-  },
-  filename: function(req, file, cb) {
-    // Create unique filename: timestamp-randomstring-originalname
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Memory storage - we'll upload directly to GridFS
+const storage = multer.memoryStorage();
 
 // File filter to accept only images
 const fileFilter = (req, file, cb) => {
@@ -40,4 +32,35 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-module.exports = upload;
+/**
+ * Upload file buffer to GridFS
+ * @param {Buffer} buffer - File buffer
+ * @param {string} originalname - Original filename
+ * @param {string} mimetype - MIME type
+ * @returns {Promise<string>} GridFS file ID
+ */
+const uploadToGridFS = async (buffer, originalname, mimetype) => {
+  try {
+    // Create unique filename: timestamp-randomstring-originalname
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(originalname);
+    const filename = uniqueSuffix + ext;
+    
+    const fileId = await uploadFile(buffer, filename, mimetype, {
+      originalName: originalname
+    });
+    
+    return {
+      fileId,
+      filename,
+      originalname
+    };
+  } catch (error) {
+    throw new Error(`Failed to upload to GridFS: ${error.message}`);
+  }
+};
+
+module.exports = {
+  upload,
+  uploadToGridFS
+};

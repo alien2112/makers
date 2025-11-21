@@ -184,13 +184,115 @@
   transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+  .checkout-container {
+    padding: var(--spacing-lg);
+  }
+
+  .checkout-content {
+    gap: var(--spacing-2xl);
+  }
+}
+
+@media (max-width: 968px) {
   .checkout-content {
     grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .checkout-summary {
+    position: static;
+    order: -1;
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: var(--spacing-md);
+  }
+
+  .page-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .checkout-form {
+    padding: var(--spacing-lg);
+  }
+
+  .checkout-form-section h2 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    margin-bottom: var(--spacing-md);
   }
   
   .form-row {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group label {
+    font-size: var(--font-size-sm);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .checkout-summary {
+    padding: var(--spacing-lg);
+  }
+
+  .checkout-summary h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .order-item {
+    font-size: var(--font-size-sm);
+  }
+
+  .summary-row {
+    font-size: var(--font-size-sm);
+  }
+
+  .summary-row.total {
+    font-size: var(--font-size-base);
+  }
+
+  .place-order-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .checkout-container {
+    padding: var(--spacing-sm);
+  }
+
+  .checkout-form {
+    padding: var(--spacing-md);
+  }
+
+  .checkout-summary {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (min-width: 1920px) {
+  .checkout-container {
+    max-width: 1400px;
+  }
+
+  .checkout-content {
+    grid-template-columns: 1fr 450px;
   }
 }
 

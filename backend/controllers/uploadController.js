@@ -1,3 +1,6 @@
+const { uploadToGridFS } = require('../utils/upload');
+const ImageMapping = require('../models/ImageMapping');
+
 /**
  * @desc    Upload product image(s)
  * @route   POST /api/upload/product
@@ -12,11 +15,31 @@ exports.uploadProductImages = async (req, res, next) => {
       });
     }
 
-    // Generate URLs for uploaded files
-    const imageUrls = req.files.map(file => ({
-      url: `/uploads/products/${file.filename}`,
-      alt: req.body.alt || 'Product image'
-    }));
+    // Upload all files to GridFS
+    const uploadPromises = req.files.map(async (file) => {
+      const { fileId, filename } = await uploadToGridFS(
+        file.buffer,
+        file.originalname,
+        file.mimetype
+      );
+
+      // Store mapping for backward compatibility
+      const imagePath = `/uploads/products/${filename}`;
+      await ImageMapping.create({
+        filename: filename,
+        gridfsFileId: fileId,
+        originalPath: imagePath
+      });
+
+      // Return URL in the format /uploads/products/{filename}
+      return {
+        url: imagePath,
+        fileId: fileId, // Store GridFS ID for reference
+        alt: req.body.alt || 'Product image'
+      };
+    });
+
+    const imageUrls = await Promise.all(uploadPromises);
 
     res.status(200).json({
       success: true,
@@ -42,14 +65,28 @@ exports.uploadSingleImage = async (req, res, next) => {
       });
     }
 
-    const imageUrl = `/uploads/products/${req.file.filename}`;
+    const { fileId, filename } = await uploadToGridFS(
+      req.file.buffer,
+      req.file.originalname,
+      req.file.mimetype
+    );
+
+    const imageUrl = `/uploads/products/${filename}`;
+
+    // Store mapping for backward compatibility
+    await ImageMapping.create({
+      filename: filename,
+      gridfsFileId: fileId,
+      originalPath: imageUrl
+    });
 
     res.status(200).json({
       success: true,
       message: 'Image uploaded successfully',
       data: {
         url: imageUrl,
-        filename: req.file.filename
+        fileId: fileId,
+        filename: filename
       }
     });
   } catch (error) {

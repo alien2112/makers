@@ -42,12 +42,19 @@ exports.createOrder = async (req, res, next) => {
         });
       }
 
+      // Handle image - can be object {url, alt} or string
+      let imageUrl = '';
+      if (product.images && product.images.length > 0) {
+        const firstImage = product.images[0];
+        imageUrl = typeof firstImage === 'string' ? firstImage : (firstImage.url || '');
+      }
+
       orderItems.push({
         product: product._id,
         name: product.name,
         quantity: item.quantity,
         price: product.price,
-        image: product.images[0]?.url || ''
+        image: imageUrl
       });
 
       subtotal += product.price * item.quantity;
@@ -59,8 +66,17 @@ exports.createOrder = async (req, res, next) => {
     const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
     const total = subtotal + tax + shipping;
 
+    // Generate unique order number
+    const date = new Date();
+    const dateStr = date.getFullYear() +
+                    String(date.getMonth() + 1).padStart(2, '0') +
+                    String(date.getDate()).padStart(2, '0');
+    const random = String(Math.floor(Math.random() * 100000)).padStart(5, '0');
+    const orderNumber = `ORD-${dateStr}-${random}`;
+
     // Create order
     const order = await Order.create({
+      orderNumber,
       user: req.user.id,
       items: orderItems,
       shippingAddress,

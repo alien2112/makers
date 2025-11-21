@@ -33,7 +33,24 @@ export const getCategories = async () => {
 export const getCategoryBySlug = async (slug) => {
   try {
     const categories = await getCategories();
-    return categories.find((c) => c.slug === slug) || null;
+    // Try exact match first
+    let category = categories.find((c) => c.slug === slug);
+    
+    // If not found, try case-insensitive match
+    if (!category) {
+      category = categories.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
+    }
+    
+    // If still not found, try matching by name (for backward compatibility)
+    if (!category) {
+      const normalizedSlug = slug.toLowerCase().replace(/-/g, ' ');
+      category = categories.find((c) => 
+        c.name.toLowerCase().replace(/\s+/g, '-') === slug.toLowerCase() ||
+        c.name.toLowerCase().replace(/\s+/g, ' ') === normalizedSlug
+      );
+    }
+    
+    return category || null;
   } catch (error) {
     console.error('Error fetching category:', error);
     return null;

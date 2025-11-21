@@ -65,8 +65,9 @@ const AdminUsers = () => {
       opacity: 1,
       x: 0,
       transition: {
-        delay: i * 0.05,
-        duration: 0.3,
+        delay: i * 0.04,
+        duration: 0.4,
+        ease: [0.4, 0, 0.2, 1],
       },
     }),
     exit: { opacity: 0, x: 20 },
@@ -152,6 +153,7 @@ const AdminUsers = () => {
                     animate="visible"
                     exit="exit"
                     className="table-row"
+                    whileHover={{ backgroundColor: '#f8fafc' }}
                   >
                     <td>
                       <div className="user-cell">
@@ -168,25 +170,31 @@ const AdminUsers = () => {
                       </span>
                     </td>
                     <td>
-                      <button
+                      <motion.button
                         className={`status-toggle ${user.isActive ? 'active' : 'inactive'}`}
                         onClick={() => handleStatusToggle(user._id, user.isActive)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                       >
                         {user.isActive ? 'Active' : 'Inactive'}
-                      </button>
+                      </motion.button>
                     </td>
                     <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                     <td>
                       <div className="action-buttons">
-                        <button
+                        <motion.button
                           className="action-btn delete-btn"
                           onClick={() => handleDelete(user._id)}
                           title="Delete user"
+                          whileHover={{ scale: 1.1, backgroundColor: '#fee2e2' }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                         >
                           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
-                        </button>
+                        </motion.button>
                       </div>
                     </td>
                   </motion.tr>
@@ -200,23 +208,29 @@ const AdminUsers = () => {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="pagination">
-          <button
+          <motion.button
             className="pagination-btn"
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
+            whileHover={page !== 1 ? { scale: 1.05 } : {}}
+            whileTap={page !== 1 ? { scale: 0.95 } : {}}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             Previous
-          </button>
+          </motion.button>
           <span className="pagination-info">
             Page {page} of {totalPages}
           </span>
-          <button
+          <motion.button
             className="pagination-btn"
             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
+            whileHover={page !== totalPages ? { scale: 1.05 } : {}}
+            whileTap={page !== totalPages ? { scale: 0.95 } : {}}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             Next
-          </button>
+          </motion.button>
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './Footer.css';
 
 const Footer = () => {
@@ -7,11 +8,11 @@ const Footer = () => {
       {/* Top Blue Header Bar */}
       <div className="footer-top-bar">
         <div className="footer-top-container">
-          <span className="footer-top-text">Get connected with us:</span>
+          <span className="footer-top-text">Get connected with us</span>
           <div className="footer-top-links">
             <a href="tel:+20248813824" className="footer-top-link">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-1.12.9-1.12 2.4 0 3.3l1.034 1.035a.678.678 0 0 0 1.015-.063l1.034-1.035a.678.678 0 0 0-.063-1.015L3.654 1.328zM1.605 2.3L.571 1.265c-1.12.9-1.12 2.4 0 3.3l1.034 1.035a.678.678 0 0 0 1.015-.063l1.034-1.035a.678.678 0 0 0-.063-1.015L1.605 2.3zm11.44 5.679a.678.678 0 0 0-1.015-.063l-1.034 1.035a.678.678 0 0 0-.063 1.015l1.034 1.035a.678.678 0 0 0 1.015-.063l1.034-1.035a.678.678 0 0 0 .063-1.015zm-2.05 2.05L9.95 10.064a.678.678 0 0 0-1.015-.063l-1.034 1.035a.678.678 0 0 0-.063 1.015l1.034 1.035a.678.678 0 0 0 1.015-.063l1.034-1.035a.678.678 0 0 0 .063-1.015z"/>
+                <path d="M5.5 3.5L11 8l-5.5 4.5V3.5z"/>
               </svg>
               <span>+20248813824</span>
             </a>
@@ -112,18 +113,30 @@ const Footer = () => {
       </div>
 
       {/* Floating WhatsApp Icon */}
-      <a 
+      <motion.a 
         href="https://wa.me/20248813824" 
         className="footer-whatsapp-float"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp Support"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        animate={{ 
+          y: [0, -10, 0],
+        }}
+        transition={{ 
+          y: { 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          } 
+        }}
       >
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="16" fill="#25D366"/>
           <path d="M16 4C9.373 4 4 9.373 4 16c0 2.165.572 4.19 1.57 5.945L4 28l6.055-1.57A11.95 11.95 0 0 0 16 28c6.627 0 12-5.373 12-12S22.627 4 16 4zm6.5 17.5c-.35.99-1.75 1.8-2.4 2.05-.65.25-1.5.4-2.7.7-1.2.3-2.85.35-4.4-.15-1.55-.5-2.7-1.4-3.75-2.5-1.3-1.35-2.3-3.05-2.85-4.75-.55-1.7-.1-3.35.25-4.35.35-1 1.2-2.1 1.65-2.4.45-.3.95-.45 1.25-.45.3 0 .6.05.85.1.25.05.6.15.85.6.25.45.85 1.75.95 1.9.1.15.2.3.1.6-.1.3-.1.5-.2.7-.1.2-.2.4-.3.55-.1.15-.2.3-.4.45-.2.15-.4.3-.6.45-.2.15-.4.25-.6.4-.2.15-.15.3-.1.5.05.2.25.85.55 1.4.3.55.6 1.05.95 1.5.7.9 1.5 1.6 2.4 2.05.9.45 1.4.35 1.9.2.5-.15 2.1-1 2.4-1.2.3-.2.5-.15.85.05.35.2 2.2 1.3 2.6 1.5.4.2.7.3.8.5.1.2.1.35.05.5-.05.15-.2.3-.45.5z" fill="white"/>
         </svg>
-      </a>
+      </motion.a>
     </footer>
   );
 };

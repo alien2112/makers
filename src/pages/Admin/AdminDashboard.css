@@ -43,12 +43,14 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
 .kpi-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 86, 204, 0.1);
 }
 
 .kpi-icon {
@@ -77,15 +79,17 @@
 .kpi-title {
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: #475569;
   margin: 0;
+  letter-spacing: 0.2px;
 }
 
 .kpi-value {
   font-size: 28px;
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .kpi-change {
@@ -105,13 +109,20 @@
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.dashboard-card:hover {
+  border-color: rgba(0, 86, 204, 0.1);
 }
 
 .card-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
   margin: 0 0 20px 0;
+  letter-spacing: -0.3px;
 }
 
 /* Orders by Status */
@@ -136,14 +147,14 @@
 .status-name {
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
+  color: #334155;
   text-transform: capitalize;
 }
 
 .status-count {
   font-size: 14px;
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .status-bar {
@@ -174,11 +185,8 @@
   padding: 12px;
   background: #f8fafc;
   border-radius: 12px;
-  transition: all 0.2s ease;
-}
-
-.recent-order-item:hover {
-  background: #f1f5f9;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .order-info {
@@ -190,7 +198,7 @@
 .order-number {
   font-size: 14px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .order-status-badge {
@@ -248,6 +256,8 @@
   background: #fef2f2;
   border-radius: 12px;
   border-left: 4px solid #ef4444;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .stock-info {
@@ -259,7 +269,7 @@
 .stock-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .stock-category {
@@ -287,6 +297,8 @@
   padding: 12px;
   background: #f8fafc;
   border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .selling-info {
@@ -298,7 +310,7 @@
 .selling-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .selling-sold {
@@ -313,19 +325,207 @@
 }
 
 /* Responsive */
+@media (max-width: 1400px) {
+  .kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
 @media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+
+  .kpi-card {
+    padding: 20px;
+  }
+
+  .dashboard-card {
+    padding: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .kpi-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kpi-card {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .kpi-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .kpi-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+  }
+
+  .kpi-title {
+    font-size: 13px;
   }
 
   .dashboard-card {
-    padding: 20px;
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .recent-order-item,
+  .low-stock-item,
+  .best-selling-item {
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .order-info,
+  .stock-info,
+  .selling-info {
+    width: 100%;
+  }
+
+  .order-amount,
+  .stock-count,
+  .selling-revenue {
+    align-self: flex-end;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-dashboard {
+    gap: 20px;
+  }
+
+  .kpi-card {
+    padding: 14px;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .kpi-content {
+    align-items: center;
+  }
+
+  .kpi-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .kpi-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .kpi-value {
+    font-size: 20px;
+  }
+
+  .dashboard-card {
+    padding: 14px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .status-item {
+    gap: 6px;
+  }
+
+  .status-header {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .status-name,
+  .status-count {
+    font-size: 12px;
+  }
+
+  .order-number,
+  .stock-name,
+  .selling-name {
+    font-size: 13px;
+  }
+
+  .order-status-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  .order-amount,
+  .stock-count,
+  .selling-revenue {
+    font-size: 14px;
+  }
+
+  .stock-category,
+  .selling-sold {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid,
+  .dashboard-grid {
+    gap: 12px;
+  }
+
+  .kpi-card {
+    padding: 12px;
+  }
+
+  .dashboard-card {
+    padding: 12px;
+  }
+
+  .orders-status-list,
+  .recent-orders-list,
+  .low-stock-list,
+  .best-selling-list {
+    gap: 10px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1920px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

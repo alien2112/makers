@@ -3,12 +3,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Navbar.css';
 
 const Navbar = () => {
   const { getCartItemCount } = useCart();
   const { user, logout, isAuthenticated } = useAuth();
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const serviceMenuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,30 +56,44 @@ const Navbar = () => {
     navigate(trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : '/search');
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [location.pathname]);
+
   return (
     <header className="navbar">
-      {/* Top Blue Bar */}
       <div className="navbar-top-bar"></div>
 
-      {/* Main Header Section */}
       <div className="navbar-main">
         <div className="navbar-container">
-          {/* Logo Section */}
-          <Link to="/" className="navbar-logo">
-            <div className="logo-icon">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="8" r="4" fill="#0056CC"/>
-                <path d="M8 20 L8 32 L12 32 L12 20 Z" fill="#0056CC"/>
-                <path d="M28 20 L28 32 L32 32 L32 20 Z" fill="#0056CC"/>
-                <path d="M8 32 L12 32 L20 24 L28 32 L32 32 L20 16 Z" fill="#0056CC"/>
-              </svg>
-            </div>
-            <div className="logo-text-section">
-              <h1 className="logo-text">
-                <span className="logo-m-red">M</span>AKERS
-              </h1>
-              <p className="logo-tagline">WE MAKE THE FUTURE</p>
-            </div>
+          <button 
+            className="mobile-menu-toggle"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {mobileMenuOpen ? (
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              ) : (
+                <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              )}
+            </svg>
+          </button>
+
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            <img 
+              src="/logo.svg" 
+              alt="MAKERS Electronics Logo" 
+              className="logo-image"
+            />
           </Link>
 
           {/* Search Bar */}
@@ -97,7 +113,6 @@ const Navbar = () => {
             </button>
           </form>
 
-          {/* Utility Icons */}
           <div className="navbar-icons">
             <Link to="/cart" className="icon-link cart-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333333" strokeWidth="2">
@@ -127,7 +142,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Navigation Bar */}
       <nav className="navbar-nav">
         <div className="navbar-nav-container">
           <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>
@@ -176,6 +190,97 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="mobile-nav-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeMobileMenu}
+          >
+            <motion.nav
+              className="mobile-nav-menu"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mobile-nav-header">
+                <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
+                  <div className="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="8" r="4" fill="#0056CC"/>
+                      <path d="M8 20 L8 32 L12 32 L12 20 Z" fill="#0056CC"/>
+                      <path d="M28 20 L28 32 L32 32 L32 20 Z" fill="#0056CC"/>
+                      <path d="M8 32 L12 32 L20 24 L28 32 L32 32 L20 16 Z" fill="#0056CC"/>
+                    </svg>
+                  </div>
+                  <div className="logo-text-section">
+                    <h1 className="logo-text">
+                      <span className="logo-m-red">M</span>AKERS
+                    </h1>
+                  </div>
+                </Link>
+                <button className="mobile-nav-close" onClick={closeMobileMenu} aria-label="Close menu">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="mobile-nav-links">
+                <Link to="/" className={`mobile-nav-link ${isActive('/') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  Home
+                </Link>
+                <Link to="/products" className={`mobile-nav-link ${isActive('/products') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  Products
+                </Link>
+                <Link to="/categories" className={`mobile-nav-link ${isActive('/categories') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  Products Categories
+                </Link>
+                <Link to={isAuthenticated ? "/dashboard" : "/login"} className={`mobile-nav-link ${isActive('/dashboard') || isActive('/login') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  My Account
+                </Link>
+                <Link to="/blog" className={`mobile-nav-link ${isActive('/blog') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  Blog
+                </Link>
+                <div className="mobile-dropdown-container">
+                  <button
+                    type="button"
+                    className={`mobile-nav-link mobile-dropdown-trigger ${serviceMenuOpen ? 'active' : ''}`}
+                    onClick={toggleServiceMenu}
+                  >
+                    Customer Service
+                    <span className={`dropdown-arrow ${serviceMenuOpen ? 'open' : ''}`}>▼</span>
+                  </button>
+                  {serviceMenuOpen && (
+                    <div className="mobile-dropdown-menu">
+                      <Link to="/contact" className="mobile-dropdown-link" onClick={() => { setServiceMenuOpen(false); closeMobileMenu(); }}>
+                        Contact Us
+                      </Link>
+                      <Link to="/special-order" className="mobile-dropdown-link" onClick={() => { setServiceMenuOpen(false); closeMobileMenu(); }}>
+                        Special Order
+                      </Link>
+                    </div>
+                  )}
+                </div>
+                <Link to="/about" className={`mobile-nav-link ${isActive('/about') ? 'active' : ''}`} onClick={closeMobileMenu}>
+                  About
+                </Link>
+                <div className="mobile-nav-phone">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122L9.5 10.5a.678.678 0 0 1-.58-.122L6.622 8.08a.678.678 0 0 1-.122-.58l.5-2.307a.678.678 0 0 0-.122-.58L4.654 1.328z" fill="currentColor"/>
+                  </svg>
+                  <span>+20248813824</span>
+                </div>
+              </div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

@@ -6,10 +6,25 @@ import './AdminLayout.css';
 
 const AdminLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const menuItems = [
     { 
@@ -76,16 +91,32 @@ const AdminLayout = ({ children }) => {
   const sidebarVariants = {
     open: {
       width: 260,
+      x: 0,
       transition: {
-        duration: 0.3,
-        ease: 'easeInOut',
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     closed: {
       width: 80,
+      x: 0,
       transition: {
-        duration: 0.3,
-        ease: 'easeInOut',
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+    mobile: {
+      x: 0,
+      transition: {
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+    mobileClosed: {
+      x: '-100%',
+      transition: {
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   };
@@ -94,37 +125,86 @@ const AdminLayout = ({ children }) => {
     open: {
       marginLeft: 260,
       transition: {
-        duration: 0.3,
-        ease: 'easeInOut',
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     closed: {
       marginLeft: 80,
       transition: {
-        duration: 0.3,
-        ease: 'easeInOut',
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+    mobile: {
+      marginLeft: 0,
+      transition: {
+        duration: 0.35,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   };
 
   return (
     <div className="admin-layout">
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="admin-mobile-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
       <motion.aside
-        className="admin-sidebar"
+        className={`admin-sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}
         variants={sidebarVariants}
-        animate={sidebarOpen ? 'open' : 'closed'}
-        initial={sidebarOpen ? 'open' : 'closed'}
+        animate={
+          isMobile
+            ? mobileMenuOpen
+              ? 'mobile'
+              : 'mobileClosed'
+            : sidebarOpen
+            ? 'open'
+            : 'closed'
+        }
+        initial={
+          isMobile
+            ? 'mobileClosed'
+            : sidebarOpen
+            ? 'open'
+            : 'closed'
+        }
       >
         <div className="sidebar-header">
           <motion.button
             className="sidebar-toggle"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              if (isMobile) {
+                setMobileMenuOpen(false);
+              } else {
+                setSidebarOpen(!sidebarOpen);
+              }
+            }}
+            whileHover={{ 
+              scale: 1.05,
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              {isMobile ? (
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              ) : (
+                <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              )}
             </svg>
           </motion.button>
           <AnimatePresence>
@@ -147,18 +227,23 @@ const AdminLayout = ({ children }) => {
             const isActive = location.pathname === item.path || 
                            (item.path !== '/admin' && location.pathname.startsWith(item.path));
             return (
-              <Link
+              <motion.div
                 key={item.path}
-                to={item.path}
-                className={`nav-item ${isActive ? 'active' : ''}`}
+                whileHover={{ x: 4 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
-                <motion.div
-                  className="nav-icon"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                <Link
+                  to={item.path}
+                  className={`nav-item ${isActive ? 'active' : ''}`}
                 >
-                  {item.icon}
-                </motion.div>
+                  <motion.div
+                    className="nav-icon"
+                    whileHover={{ scale: 1.15, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                  >
+                    {item.icon}
+                  </motion.div>
                 <AnimatePresence>
                   {sidebarOpen && (
                     <motion.span
@@ -172,15 +257,16 @@ const AdminLayout = ({ children }) => {
                     </motion.span>
                   )}
                 </AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    className="nav-indicator"
-                    layoutId="activeIndicator"
-                    initial={false}
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </Link>
+                  {isActive && (
+                    <motion.div
+                      className="nav-indicator"
+                      layoutId="activeIndicator"
+                      initial={false}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </motion.div>
             );
           })}
         </nav>
@@ -190,12 +276,33 @@ const AdminLayout = ({ children }) => {
       <motion.main
         className="admin-main"
         variants={contentVariants}
-        animate={sidebarOpen ? 'open' : 'closed'}
-        initial={sidebarOpen ? 'open' : 'closed'}
+        animate={
+          isMobile
+            ? 'mobile'
+            : sidebarOpen
+            ? 'open'
+            : 'closed'
+        }
+        initial={
+          isMobile
+            ? 'mobile'
+            : sidebarOpen
+            ? 'open'
+            : 'closed'
+        }
       >
         {/* Top Navigation */}
         <header className="admin-header">
           <div className="header-left">
+            <button
+              className="mobile-menu-button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </button>
             <h1 className="page-title">
               {menuItems.find(item => 
                 location.pathname === item.path || 
@@ -204,33 +311,28 @@ const AdminLayout = ({ children }) => {
             </h1>
           </div>
           <div className="header-right">
-            <div className="header-search">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-                <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              <input type="text" placeholder="Search..." />
-            </div>
-            <button className="header-notification">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 8A6 6 0 0 0 6 8C6 5.31371 8.31371 3 11 3C13.6863 3 16 5.31371 16 8V11.5858L18.7071 14.2929C18.8946 14.4804 19 14.7348 19 15V16C19 16.5523 18.5523 17 18 17H4C3.44772 17 3 16.5523 3 16V15C3 14.7348 3.10536 14.4804 3.29289 14.2929L6 11.5858V8Z" stroke="currentColor" strokeWidth="2"/>
-                <circle cx="18" cy="6" r="4" fill="currentColor"/>
-              </svg>
-              <span className="notification-badge">3</span>
-            </button>
             <div className="header-profile">
-              <button
+              <motion.button
                 className="profile-button"
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 <div className="profile-avatar">
                   {user?.name?.charAt(0)?.toUpperCase() || 'A'}
                 </div>
                 <span className="profile-name">{user?.name || 'Admin'}</span>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <motion.svg 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={{ rotate: profileMenuOpen ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
+                </motion.svg>
+              </motion.button>
               <AnimatePresence>
                 {profileMenuOpen && (
                   <motion.div
@@ -240,27 +342,46 @@ const AdminLayout = ({ children }) => {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Link to="/profile" className="profile-menu-item">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      Profile
-                    </Link>
-                    <Link to="/dashboard" className="profile-menu-item">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      User Dashboard
-                    </Link>
-                    <button className="profile-menu-item" onClick={handleLogout}>
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M16 17L21 12L16 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      Logout
-                    </button>
+                    <motion.div
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      <Link to="/profile" className="profile-menu-item">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+                        </svg>
+                        Profile
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      <Link to="/dashboard" className="profile-menu-item">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        User Dashboard
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      <motion.button 
+                        className="profile-menu-item" 
+                        onClick={handleLogout}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M16 17L21 12L16 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        Logout
+                      </motion.button>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -270,15 +391,20 @@ const AdminLayout = ({ children }) => {
 
         {/* Page Content */}
         <div className="admin-content">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {children}
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.98 }}
+              transition={{ 
+                duration: 0.4,
+                ease: [0.4, 0, 0.2, 1]
+              }}
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </motion.main>
     </div>

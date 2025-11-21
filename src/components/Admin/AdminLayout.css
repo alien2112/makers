@@ -4,7 +4,6 @@
   background: #f5f7fa;
 }
 
-/* Sidebar */
 .admin-sidebar {
   position: fixed;
   left: 0;
@@ -13,8 +12,20 @@
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   color: white;
   z-index: 1000;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(4px);
 }
 
 .sidebar-header {
@@ -69,20 +80,23 @@
   gap: 12px;
   padding: 12px 16px;
   border-radius: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  font-weight: 500;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 .nav-item.active {
-  background: rgba(0, 86, 204, 0.2);
-  color: white;
+  background: rgba(0, 86, 204, 0.25);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .nav-icon {
@@ -117,7 +131,6 @@
   border-radius: 0 4px 4px 0;
 }
 
-/* Main Content */
 .admin-main {
   flex: 1;
   display: flex;
@@ -125,7 +138,6 @@
   min-height: 100vh;
 }
 
-/* Header */
 .admin-header {
   background: white;
   padding: 20px 32px;
@@ -138,6 +150,32 @@
   z-index: 100;
 }
 
+.mobile-menu-button {
+  display: none;
+  background: #f8fafc;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 16px;
+}
+
+.mobile-menu-button:hover {
+  background: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.mobile-menu-button svg {
+  width: 20px;
+  height: 20px;
+  color: #475569;
+}
+
 .header-left {
   flex: 1;
 }
@@ -145,8 +183,9 @@
 .page-title {
   font-size: 28px;
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .header-right {
@@ -176,15 +215,21 @@
   border-radius: 12px;
   font-size: 14px;
   width: 300px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background: #f8fafc;
+  color: #1e293b;
+}
+
+.header-search input::placeholder {
+  color: #94a3b8;
 }
 
 .header-search input:focus {
   outline: none;
   border-color: #0056CC;
   background: white;
-  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.12);
+  transform: translateY(-1px);
 }
 
 .header-notification {
@@ -198,11 +243,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-notification:hover {
   background: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-notification svg {
@@ -238,11 +284,12 @@
   padding: 8px 12px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .profile-button:hover {
   background: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .profile-avatar {
@@ -261,7 +308,7 @@
 .profile-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .profile-button svg {
@@ -288,11 +335,11 @@
   gap: 12px;
   padding: 12px 16px;
   border-radius: 8px;
-  color: #475569;
+  color: #334155;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   background: none;
   width: 100%;
@@ -301,7 +348,7 @@
 }
 
 .profile-menu-item:hover {
-  background: #f8fafc;
+  background: #f1f5f9;
   color: #0056CC;
 }
 
@@ -310,13 +357,17 @@
   height: 18px;
 }
 
-/* Content */
 .admin-content {
   flex: 1;
   padding: 32px;
 }
 
-/* Responsive */
+@media (max-width: 1200px) {
+  .admin-content {
+    padding: 24px;
+  }
+}
+
 @media (max-width: 1024px) {
   .admin-sidebar {
     width: 80px !important;
@@ -330,15 +381,23 @@
   .nav-label {
     display: none;
   }
+
+  .admin-content {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 768px) {
-  .admin-sidebar {
-    transform: translateX(-100%);
-    width: 260px !important;
+  .mobile-menu-button {
+    display: flex;
   }
 
-  .admin-sidebar.open {
+  .admin-sidebar {
+    width: 280px !important;
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.mobile-open {
     transform: translateX(0);
   }
 
@@ -346,8 +405,17 @@
     margin-left: 0 !important;
   }
 
-  .header-search input {
-    width: 200px;
+  .admin-header {
+    padding: 16px 20px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
   }
 
   .profile-name {
@@ -355,25 +423,85 @@
   }
 
   .admin-content {
-    padding: 20px;
+    padding: 16px;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px;
+  }
+
+  .sidebar-nav {
+    padding: 16px 8px;
+  }
+
+  .nav-item {
+    padding: 12px;
+    justify-content: center;
+  }
+
+  .nav-label {
+    display: block;
+  }
+
+  .sidebar-logo {
+    display: block;
   }
 }
 
 @media (max-width: 640px) {
   .admin-header {
-    padding: 16px 20px;
+    padding: 12px 16px;
   }
 
   .page-title {
-    font-size: 24px;
+    font-size: 18px;
   }
 
-  .header-search {
-    display: none;
+  .profile-button {
+    padding: 6px 10px;
+  }
+
+  .profile-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
   }
 
   .admin-content {
+    padding: 12px;
+  }
+
+  .admin-sidebar {
+    width: 100vw !important;
+    max-width: 320px;
+  }
+
+  .sidebar-header {
     padding: 16px;
+  }
+
+  .nav-item {
+    padding: 14px 16px;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-header {
+    padding: 10px 12px;
+  }
+
+  .page-title {
+    font-size: 16px;
+  }
+
+  .admin-content {
+    padding: 10px;
+  }
+
+  .kpi-grid,
+  .dashboard-grid {
+    gap: 12px;
   }
 }
 

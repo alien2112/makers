@@ -33,14 +33,20 @@
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   font-size: 14px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background: white;
+  color: #1e293b;
+}
+
+.search-box input::placeholder {
+  color: #94a3b8;
 }
 
 .search-box input:focus {
   outline: none;
   border-color: #0056CC;
-  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.12);
+  transform: translateY(-1px);
 }
 
 .filter-select {
@@ -50,14 +56,16 @@
   font-size: 14px;
   background: white;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 150px;
+  color: #1e293b;
 }
 
 .filter-select:focus {
   outline: none;
   border-color: #0056CC;
-  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 86, 204, 0.12);
+  transform: translateY(-1px);
 }
 
 .table-loading {
@@ -95,17 +103,13 @@
 
 .table-row {
   border-bottom: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
-}
-
-.table-row:hover {
-  background: #f8fafc;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .table-row td {
   padding: 16px;
   font-size: 14px;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .order-number {
@@ -121,7 +125,7 @@
 
 .customer-name {
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .customer-email {
@@ -176,7 +180,8 @@
 }
 
 .status-select:hover {
-  opacity: 0.8;
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
 .view-order-btn {
@@ -188,7 +193,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background: #f8fafc;
   color: #64748b;
 }
@@ -196,6 +201,7 @@
 .view-order-btn:hover {
   background: #e2e8f0;
   color: #0056CC;
+  box-shadow: 0 2px 8px rgba(0, 86, 204, 0.15);
 }
 
 .view-order-btn svg {
@@ -224,6 +230,7 @@
     min-width: 100%;
   }
 }
+
 
 
 

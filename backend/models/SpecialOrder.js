@@ -41,12 +41,44 @@ const specialOrderSchema = new mongoose.Schema({
   notes: {
     type: String,
     trim: true
-  }
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Processing', 'Completed', 'Rejected'],
+    default: 'Pending'
+  },
+  statusHistory: [{
+    status: String,
+    timestamp: {
+      type: Date,
+      default: Date.now
+    },
+    note: String
+  }]
 }, {
   timestamps: true
 });
 
+// Generate unique order number before saving
+specialOrderSchema.pre('save', async function(next) {
+  if (this.isNew) {
+    // Add initial status to history
+    this.statusHistory.push({
+      status: this.status,
+      timestamp: new Date(),
+      note: 'Special order created'
+    });
+  }
+  next();
+});
+
+// Index for faster queries
+specialOrderSchema.index({ status: 1, createdAt: -1 });
+specialOrderSchema.index({ phone: 1 });
+specialOrderSchema.index({ email: 1 });
+
 module.exports = mongoose.model('SpecialOrder', specialOrderSchema);
+
 
 
 

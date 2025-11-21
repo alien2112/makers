@@ -9,6 +9,12 @@ const {
   updateOrderStatus,
   getAdminOrder
 } = require('../controllers/adminController');
+const {
+  getAllSpecialOrders,
+  getSpecialOrder,
+  updateSpecialOrderStatus,
+  deleteSpecialOrder
+} = require('../controllers/specialOrderController');
 const { protect, adminOnly } = require('../middleware/auth');
 const { mongoIdValidation, validate } = require('../middleware/validator');
 
@@ -27,5 +33,11 @@ router.delete('/users/:id', mongoIdValidation, validate, deleteUser);
 router.get('/orders', getAllOrders);
 router.get('/orders/:id', mongoIdValidation, validate, getAdminOrder);
 router.put('/orders/:id/status', mongoIdValidation, validate, updateOrderStatus);
+
+// Special Order management
+router.get('/special-orders', getAllSpecialOrders);
+router.get('/special-orders/:id', mongoIdValidation, validate, getSpecialOrder);
+router.put('/special-orders/:id/status', mongoIdValidation, validate, updateSpecialOrderStatus);
+router.delete('/special-orders/:id', mongoIdValidation, validate, deleteSpecialOrder);
 
 module.exports = router;

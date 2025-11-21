@@ -125,8 +125,9 @@ const AdminOrders = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                    transition={{ delay: index * 0.04, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                     className="table-row"
+                    whileHover={{ backgroundColor: '#f8fafc' }}
                   >
                     <td>
                       <span className="order-number">{order.orderNumber}</span>
@@ -144,28 +145,34 @@ const AdminOrders = () => {
                       <span className="order-total">${order.pricing.total}</span>
                     </td>
                     <td>
-                      <select
+                      <motion.select
                         value={order.status}
                         onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
                         className={`status-select status-${order.status.toLowerCase()}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                       >
                         {statusOptions.map(status => (
                           <option key={status} value={status}>{status}</option>
                         ))}
-                      </select>
+                      </motion.select>
                     </td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                     <td>
-                      <button
+                      <motion.button
                         className="view-order-btn"
                         title="View details"
                         onClick={() => openOrderDetails(order._id)}
+                        whileHover={{ scale: 1.1, backgroundColor: '#e2e8f0' }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                       >
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
                         </svg>
-                      </button>
+                      </motion.button>
                     </td>
                   </motion.tr>
                 ))}

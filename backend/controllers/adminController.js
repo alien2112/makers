@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const SpecialOrder = require('../models/SpecialOrder');
 
 /**
  * @desc    Get dashboard statistics
@@ -13,6 +14,7 @@ exports.getDashboardStats = async (req, res, next) => {
     const totalUsers = await User.countDocuments({ role: 'user' });
     const totalProducts = await Product.countDocuments();
     const totalOrders = await Order.countDocuments();
+    const totalSpecialOrders = await SpecialOrder.countDocuments();
 
     // Get order statistics
     const ordersByStatus = await Order.aggregate([
@@ -75,6 +77,22 @@ exports.getDashboardStats = async (req, res, next) => {
       }
     ]);
 
+    // Get special orders by status
+    const specialOrdersByStatus = await SpecialOrder.aggregate([
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // Get recent special orders
+    const recentSpecialOrders = await SpecialOrder.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('firstName lastName phone email status createdAt');
+
     res.status(200).json({
       success: true,
       data: {
@@ -82,10 +100,13 @@ exports.getDashboardStats = async (req, res, next) => {
           totalUsers,
           totalProducts,
           totalOrders,
+          totalSpecialOrders,
           totalRevenue: totalRevenue[0]?.total || 0
         },
         ordersByStatus,
+        specialOrdersByStatus,
         recentOrders,
+        recentSpecialOrders,
         lowStockProducts,
         bestSellingProducts
       }

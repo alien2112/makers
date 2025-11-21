@@ -16,33 +16,56 @@ const resolveImage = (imagePath) => {
   return `${FILE_BASE_URL}${imagePath}`;
 };
 
-const mapProduct = (product) => ({
-  id: product._id,
-  _id: product._id,
-  name: product.name,
-  price: product.price,
-  image: resolveImage(product.images?.[0]),
-  images: (product.images || []).map(resolveImage),
-  category: product.category,
-  description: product.description,
-  stock: product.stock,
-  inStock: product.stock > 0,
-  isNew: product.isNew || false,
-  isFeatured: product.isFeatured || false,
-  tags: product.tags || [],
-  specifications: product.specifications || {},
-  createdAt: product.createdAt,
-});
+const mapProduct = (product) => {
+  // Handle images - can be array of objects {url, alt} or array of strings
+  const images = (product.images || []).map(img => {
+    if (typeof img === 'string') {
+      return resolveImage(img);
+    } else if (img && img.url) {
+      return resolveImage(img.url);
+    }
+    return null;
+  }).filter(Boolean);
+
+  return {
+    id: product._id,
+    _id: product._id,
+    name: product.name,
+    price: product.price,
+    image: images[0] || null,
+    images: images,
+    category: product.category,
+    description: product.description,
+    stock: product.stock,
+    inStock: product.stock > 0,
+    isNew: product.isNew || false,
+    isFeatured: product.isFeatured || false,
+    tags: product.tags || [],
+    specifications: product.specifications || {},
+    createdAt: product.createdAt,
+  };
+};
 
 export const getProducts = async (filters = {}) => {
   const response = await get('/products', filters);
 
   if (response.success) {
-    const rawProducts =
-      response.data?.products ||
-      response.data?.data ||
-      response.data ||
-      [];
+    // Handle different response structures
+    let rawProducts = [];
+    
+    if (Array.isArray(response.data)) {
+      // Backend returns data as array directly
+      rawProducts = response.data;
+    } else if (response.data?.products) {
+      // Some endpoints return { data: { products: [...] } }
+      rawProducts = response.data.products;
+    } else if (response.data?.data && Array.isArray(response.data.data)) {
+      // Nested data structure
+      rawProducts = response.data.data;
+    } else if (response.products && Array.isArray(response.products)) {
+      // Direct products array
+      rawProducts = response.products;
+    }
 
     const products = rawProducts.map(mapProduct);
 
